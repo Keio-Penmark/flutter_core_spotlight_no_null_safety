@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 
-typedef UserActivityCallback = Function(FlutterSpotlightUserActivity?);
+typedef UserActivityCallback = Function(FlutterSpotlightUserActivity);
 
 class FlutterSpotlightItem {
   FlutterSpotlightItem({
@@ -60,9 +60,9 @@ class FlutterSpotlightUserActivity {
     );
   }
 
-  final String? key;
-  final String? uniqueIdentifier;
-  final Map<String, dynamic>? userInfo;
+  final String key;
+  final String uniqueIdentifier;
+  final Map<String, dynamic> userInfo;
 
   Map<String, dynamic> toMap() {
     return {
@@ -83,7 +83,7 @@ class FlutterCoreSpotlight {
   static const MethodChannel _channel =
       const MethodChannel('flutter_core_spotlight');
 
-  UserActivityCallback? _onSearchableItemSelected;
+  UserActivityCallback _onSearchableItemSelected;
 
   Future<String> indexSearchableItems(
       List<FlutterSpotlightItem> spotlightItems) async {
@@ -105,7 +105,7 @@ class FlutterCoreSpotlight {
       case 'onSearchableItemSelected':
         final Map<String, dynamic> args =
             call.arguments.cast<String, dynamic>();
-        _onSearchableItemSelected!(FlutterSpotlightUserActivity.fromMap(args));
+        _onSearchableItemSelected(FlutterSpotlightUserActivity.fromMap(args));
         break;
       default:
         throw UnsupportedError('Unrecognized JSON message');
