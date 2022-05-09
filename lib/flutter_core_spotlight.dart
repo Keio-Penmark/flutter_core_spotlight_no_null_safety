@@ -7,10 +7,10 @@ typedef UserActivityCallback = Function(FlutterSpotlightUserActivity);
 
 class FlutterSpotlightItem {
   FlutterSpotlightItem({
-    required this.uniqueIdentifier,
-    required this.domainIdentifier,
-    required this.attributeTitle,
-    required this.attributeDescription,
+    this.uniqueIdentifier,
+    this.domainIdentifier,
+    this.attributeTitle,
+    this.attributeDescription,
   });
 
   factory FlutterSpotlightItem.fromJson(String source) =>
@@ -95,7 +95,7 @@ class FlutterCoreSpotlight {
     return await _channel.invokeMethod('delete_searchable_items', identifiers);
   }
 
-  void configure({required UserActivityCallback onSearchableItemSelected}) {
+  void configure({UserActivityCallback onSearchableItemSelected}) {
     _onSearchableItemSelected = onSearchableItemSelected;
     _channel.setMethodCallHandler(_handleMethod);
   }
